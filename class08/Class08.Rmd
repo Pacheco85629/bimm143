@@ -1,0 +1,290 @@
+---
+title: "Class08 try at home"
+author: "Alicia Pacheco"
+date: "October 31, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## K-means clustering 
+Our first example with k-means 
+```{r}
+#Example plot see how R markdown works
+plot(1:10,type="l")
+
+#generate some example data for clustering 
+tmp <- c(rnorm(30,-3), rnorm(30,3))
+x <- cbind(x=tmp, y=rev(tmp))  
+#And we plot
+plot(x)
+
+
+```
+  
+Using the *kmeans()* function setting k to 2 and nstart=20
+Inspect/print the results
+
+```{r}
+k<-kmeans(x,centers=2,nstart=20)
+
+```
+How mant points are in each cluster?
+```{r}
+k$size
+
+```
+ Q. What ‘component’ of your result object details
+ - cluster size
+  `k$size`  
+ - cluster assignment/membership
+  `k$cluster`  
+ - cluster center?
+  `k$centers`
+  
+```{r}
+
+#cluster size
+k$size
+
+
+
+```
+
+```{r}
+#cluster assignement/membership
+k$cluster
+
+
+```
+
+```{r}
+#cluster centers
+k$centers
+```
+Plot x colored by the kmeans cluster assignment and
+add cluster centers as blue points
+
+```{r}
+plot(x, col=k$cluster,pch=20)
+palette(c("black","red"))
+points(k$centers,col="blue3",pch=20,cex=3)
+
+```
+
+Q. Repeat for k=3, which has the lower tot.withinss? 
+ 
+```{r}
+k3<-kmeans(x,centers=3, nstart = 20)
+
+plot(x,col=k3$cluster,pch=20)
+palette(c("purple","red","black"))
+points(k3$centers,col="blue",pch=20,cex=2)
+
+
+```
+ 
+```{r}
+#total within cluster sum of squares, the smallest the petter 
+k$tot.withinss
+
+k3$tot.withinss
+```
+ 
+##Hierarchical CLustering  
+Create a hierarchical cluster model:hc
+```{r}
+hc<-hclust(dist(x))
+plot(hc)
+```
+cutree
+
+```{r}
+  
+cutree(hc,k=2)
+
+```
+###A more real example
+
+```{r}
+# Step 1. Generate some example data for clustering
+x <- rbind(
+ matrix(rnorm(100, mean=0, sd = 0.3), ncol = 2), # c1
+ matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2), # c2
+ matrix(c(rnorm(50, mean = 1, sd = 0.3), # c3
+ rnorm(50, mean = 0, sd = 0.3)), ncol = 2))
+
+colnames(x) <- c("x", "y")
+```
+
+```{r}
+# Step 2. Plot the data without clustering
+plot(x)
+
+```
+```{r}
+
+# Step 3. Generate colors for known clusters
+# (just so we can compare to hclust results)
+col <- as.factor( rep(c("c1","c2","c3"), each=50) )
+plot(x, col=col)
+```
+
+Q. Use the dist(), hclust(), plot() and cutree()
+functions to return 2 and 3 clusters 
+
+```{r}
+
+hc<-hclust(dist(x))
+
+plot(hc)
+cutree(hc,k=2)  
+
+
+```
+
+```{r}
+hc<-hclust(dist(x))
+
+plot(hc)
+cutree(hc,k=3)
+```
+
+##**PCA**
+
+First lets generate some example data to work with. 
+
+```{r}
+ #Initialize a blank 100 row by 10 column matrix
+mydata <- matrix(nrow=100, ncol=10) 
+#Labeled the rows gene1, gene2, etc all the way to gene100  
+
+rownames(mydata)<-paste("gene",1:100,sep="")
+#Label the columns with wt and ko  
+colnames(mydata)<-c(paste("wt",1:5,sep=""),paste("ko",1:5,sep=""))
+head(mydata)
+
+```
+Fill in some facke read counts
+
+```{r}
+for(i in 1:nrow(mydata)) {
+ wt.values <- rpois(5, lambda=sample(x=10:1000, size=1))
+ ko.values <- rpois(5, lambda=sample(x=10:1000, size=1))
+
+ mydata[i,] <- c(wt.values, ko.values)
+} 
+
+
+```
+
+Now we can do PCA  
+
+
+```{r}
+#prcomp expects the samples to be the row and genes to be columns so we need to transose the matrix with the t()  
+pca<-prcomp(t(mydata),scale=TRUE)
+
+#See atributes  
+attributes(pca)
+
+```
+pca$ contains the principal components
+
+```{r}
+
+plot(pca$x[,1],pca$x[,2])
+```
+
+variance captured per Pc
+
+```{r}
+#variance captured by PCA
+
+pca.var <- pca$sdev^2
+# Precent variance is often more informative to look at
+
+pca.var.per <- round(pca.var/sum(pca.var)*100, 1) 
+
+pca.var.per
+
+```
+We can plot this 
+
+```{r}
+barplot(pca.var.per, main="Scree Plot", xlab="Principal Component", ylab="Percent Variation")
+#This means that there are big differences between these two groups
+
+```
+
+
+We can add color to the vector 
+
+```{r}
+colvec<-colnames(mydata)
+colvec[grep("wt",colvec)]<-"red"
+colvec[grep("ko",colvec)]<-"blue"
+
+plot(pca$x[,1],pca$x[,2],col=colvec, pch=20,
+     xlab=paste0("PC1 (", pca.var.per[1], "%)"),
+     ylab=paste0("PC2 (", pca.var.per[2], "%)"))
+
+```
+
+We can identify the points
+
+```{r}
+plot(pca$x[,1],pca$x[,2],col=colvec, pch=20,
+     xlab=paste0("PC1 (", pca.var.per[1], "%)"),
+     ylab=paste0("PC2 (", pca.var.per[2], "%)"))
+
+identify(pca$x[,1],pca$x[,2],labels=colnames(mydata))
+
+```
+
+Finally we will use loading scores
+
+```{r}
+#loading scores help us deteremine which genes have the largest effect on where samples are pltted in the PCA plot
+#prcomp() calls loading scores $rotation
+
+loading_scores<-pca$rotation[,1]
+
+summary(loading_scores)
+
+```
+We are interested in the magnitued of both plu and minus contributing genes
+
+```{r}
+gene_scores<-abs(loading_scores)
+
+gene_scores
+
+```
+
+```{r}
+#we can sort magnitudes from high to low  
+
+gene_score_ranked <- sort(gene_scores, decreasing=TRUE)  
+
+
+
+```
+```{r}
+#lets se the top five scores  
+top_five<-names(gene_score_ranked[1:5])  
+top_five
+
+
+```
+
+```{r}
+##show the scores
+
+pca$rotation[top_five,1]  
+
+```
+
+
