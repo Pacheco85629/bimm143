@@ -1,4 +1,9 @@
 
+#' ---
+#' title: "Class05"
+#' output: github_document
+#' --- 
+
 #Section 2 Customizing plots
 #2A Line Plot------------------------
 
