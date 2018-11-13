@@ -45,12 +45,22 @@ lig <- trim.pdb(hiv, "ligand")
 write.pdb(prot, file="1hsg_protein.pdb")
 write.pdb(lig, file="1hsg_ligand.pdb")
 ```
+Docking with Vina
+running command: ~/Downloads/autodock_vina_1_1_2_mac/bin/vina --config config.txt --log log.txt
 
+We got a file all.pdbqt that we need to make it into PBD format
 
 ```{r}
-#library(bio3d)
+
 res <- read.pdb("all.pdbqt", multi=TRUE)
 write.pdb(res, "results.pdb")
+summary(res)
+```
+
+
+back in Rstudio
+```{r}
+
 
 ```
 
