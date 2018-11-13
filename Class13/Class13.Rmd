@@ -9,7 +9,12 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Class13
+
+```{r}
+install.packages("bio3d")
+```
 
 ```{r}
 
@@ -39,5 +44,13 @@ lig <- trim.pdb(hiv, "ligand")
 ```{r}
 write.pdb(prot, file="1hsg_protein.pdb")
 write.pdb(lig, file="1hsg_ligand.pdb")
+```
+
+
+```{r}
+#library(bio3d)
+res <- read.pdb("all.pdbqt", multi=TRUE)
+write.pdb(res, "results.pdb")
+
 ```
 
