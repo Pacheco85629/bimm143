@@ -1,0 +1,91 @@
+---
+title: "Class14"
+author: "Alicia Pacheco"
+date: "November 15, 2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Class 14 Examine Astma SNP's 
+
+##Section 1: Identify genetic variants of interest
+
+Asthma SNPs in MXL ansestry
+```{r}
+
+mxl<-read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+
+head(mxl)
+```
+
+Now focus on 2nd column that contains geneotype
+
+```{r}
+
+#genotype percentages
+
+genotypes<-round(table (mxl[,2])/nrow(mxl)*100,2)
+
+genotypes
+
+```
+
+
+## Section 2: Initial RNA-seq anlysis 
+
+4th line in the fastq files are the scores in ascii
+```{r}
+
+#install.packages("gtools")
+#install.packages("seqinr")
+
+
+library(seqinr)
+library(gtools) 
+phred <- asc(s2c("DDDDCDEDCDDDDBBDDDCC@") ) - 33
+phred 
+
+```
+
+
+##Section 4: Population scale analysis   
+One sample is obviously not enough to know what is happening in a population. You are
+interested in assessing genetic differences on a population scale.  
+Read file into project  
+
+
+```{r}
+#read the file 
+expr<-read.table("rs8067378_ENSG00000172057.6.txt")
+
+inds.aa<-expr$geno=="A/A"
+
+
+summary(expr$exp[inds.aa])
+```
+
+```{r}
+inds.ag<-expr$geno=="A/G"
+
+
+summary(expr$exp[inds.ag])
+```
+```{r}
+inds.gg<-expr$geno=="G/G"
+
+
+summary(expr$exp[inds.gg])
+```
+We can make a boxplot
+
+```{r}
+#by looking at the Insect spray example we conclude that
+
+boxplot(exp ~ geno, data = expr)
+
+```
+
+Does the SNP effect the expression of ORMDL3?  Yes the AA genotype affects expression of the gene.  
