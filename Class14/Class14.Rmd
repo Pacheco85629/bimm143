@@ -51,7 +51,8 @@ phred
 ```
 
 
-##Section 4: Population scale analysis   
+##Section 4: Population scale analysis 
+
 One sample is obviously not enough to know what is happening in a population. You are
 interested in assessing genetic differences on a population scale.  
 Read file into project  
@@ -68,12 +69,14 @@ summary(expr$exp[inds.aa])
 ```
 
 ```{r}
+#This is the variation 
 inds.ag<-expr$geno=="A/G"
 
 
 summary(expr$exp[inds.ag])
 ```
 ```{r}
+#This is teh WT
 inds.gg<-expr$geno=="G/G"
 
 
@@ -82,7 +85,7 @@ summary(expr$exp[inds.gg])
 We can make a boxplot
 
 ```{r}
-#by looking at the Insect spray example we conclude that
+#by looking at the Insect Spray example we conclude that
 
 boxplot(exp ~ geno, data = expr)
 

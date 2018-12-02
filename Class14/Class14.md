@@ -85,6 +85,7 @@ summary(expr$exp[inds.aa])
     ##   11.40   27.02   31.25   31.82   35.92   51.52
 
 ``` r
+#This is the variation 
 inds.ag<-expr$geno=="A/G"
 
 
@@ -95,6 +96,7 @@ summary(expr$exp[inds.ag])
     ##   7.075  20.626  25.065  25.397  30.552  48.034
 
 ``` r
+#This is teh WT
 inds.gg<-expr$geno=="G/G"
 
 
@@ -107,7 +109,7 @@ summary(expr$exp[inds.gg])
 We can make a boxplot
 
 ``` r
-#by looking at the Insect spray example we conclude that
+#by looking at the Insect Spray example we conclude that
 
 boxplot(exp ~ geno, data = expr)
 ```
