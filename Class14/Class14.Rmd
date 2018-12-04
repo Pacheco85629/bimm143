@@ -34,7 +34,7 @@ genotypes
 ```
 
 
-## Section 2: Initial RNA-seq anlysis 
+## Section 2: Initial RNA-seq anlysis  
 
 4th line in the fastq files are the scores in ascii
 ```{r}
