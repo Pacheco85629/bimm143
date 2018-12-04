@@ -82,7 +82,7 @@ inds.gg<-expr$geno=="G/G"
 
 summary(expr$exp[inds.gg])
 ```
-We can make a boxplot
+We can make a boxplot here
 
 ```{r}
 #by looking at the Insect Spray example we conclude that

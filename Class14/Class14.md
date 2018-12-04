@@ -106,7 +106,7 @@ summary(expr$exp[inds.gg])
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##   6.675  16.903  20.074  20.594  24.457  33.956
 
-We can make a boxplot
+We can make a boxplot here
 
 ``` r
 #by looking at the Insect Spray example we conclude that
