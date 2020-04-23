@@ -1,4 +1,4 @@
-# BIMM143_Fall18
+# BIMM143
 Class repository for bimm 143
 
 My class list includes
