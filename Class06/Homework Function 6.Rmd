@@ -1,5 +1,5 @@
 ---
-title: "Homework- Creating a Function"
+title: "Creating a Function"
 author: "Alicia Pacheco"
 date: "October 27, 2018"
 output: github_document
@@ -11,8 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-#install.packages("bio3d")
+install.packages("bio3d")
 library (bio3d)
+
 ```
 
 
@@ -22,13 +23,13 @@ and automatically assigning a a character matrix containing all atomic coordinat
 Function reduces user error
 ```{r}
 
-obtain_datapoints <- function(file_name) {       #Takes in a PDB file name
+obtain_datapoints <- function(file_name) {              #Takes in a PDB file name
   
- sub<- read.pdb(file_name)                       #Assigns a list of class "pdb" to "s"
-   sub.chainA <- trim.pdb (sub, chain="A", elety="CA")   # Assigns smaller chain PDB object to s.chainA
-     chain_and_atomtype <- sub.chainA$atom$b              #Assigns x with the chain identifier and atom type 
+ sub<- read.pdb(file_name)                              #Assigns a list of class "pdb" to "s"
+   sub.chainA <- trim.pdb (sub, chain="A", elety="CA")  #Assigns smaller chain PDB object to s.chainA
+     chain_and_atomtype <- sub.chainA$atom$b            #Assigns x with the chain identifier and atom type 
      
-  return(chain_and_atomtype)                    #Returns chain vs atom type data points
+  return(chain_and_atomtype)                            #Returns chain vs atom type data points
 }
 
 ```
