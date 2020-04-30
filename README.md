@@ -6,7 +6,7 @@ My class list includes
 -[Class 6](https://github.com/Pacheco85629/bimm143_Fall18/blob/master/Class06/Homework_Function_6.md)  
 -[Class 7]  
 -[Introduction to Unsupervised Machine Learning: K-means Clustering, Hiererchical Clustering and PCA](https://github.com/Pacheco85629/bimm143/blob/master/class08/Introduction-to-Unsupervised-Machine-Learning.html)  
--[Class 9](https://github.com/Pacheco85629/bimm143_Fall18/blob/master/Class09/mini_project.md)  
+-[Mini project: Analysis Using Unsupervised Learning Techniques](https://github.com/Pacheco85629/bimm143_Fall18/blob/master/Class09/mini-project.md)  
 -[Class 10]  
 -[Class 11]  
 -[Class 12]  
